@@ -27,7 +27,7 @@ router.get('/', async (req, res) => { //full index view
 });
 
 router.get('/:trackId', async (req, res) => { //single track view
-    try{
+    try {
         const singleTrack = await Track.findById(req.params.trackId)
         if(!singleTrack) {
             res.status(404);
@@ -46,9 +46,40 @@ router.get('/:trackId', async (req, res) => { //single track view
 
 //=========================UPDATE=========================
 
+router.put('/:trackId', async (req, res) => {
+    try {
+        const updatedTrack = await Track.findByIdAndUpdate(req.params.trackId, req.body);
 
+        if (!updatedTrack) {
+            res.status(404)
+            throw new Error('Track not found.');
+        }
+        res.status(200).json(updatedTrack)
+    } catch (err) {
+        if (res.statusCode === 404) {
+            res.json({ err: err.message });
+        } else {
+            res.status(500).json({ err: err.message });
+        }
+    }
+});
 
 
 //=========================DELETE=========================
 
+router.delete('/:trackId', async (req,res) => {
+    try {
+        const deletedTrack = await Track.findByIdAndDelete(req.params.trackId);
+        if (!deletedTrack) {
+            res.status(404);
+            throw new Error('Track not found!');
+        }
+    } catch (err) {
+        if (res.statusCode === 404) {
+            res.json({ err: err.message });
+        } else {
+            res.status(500).json({ err: err.message });
+        }
+    }
+})
 module.exports = router;
