@@ -17,7 +17,18 @@ router.post('/', async (req, res) => {
 
 //========================= READ =========================
 
+router.get('/', async (req, res) => { //full index view
+    try {
+        const allTracks = await Track.find();
+        res.status(200).json(allTracks);
+    } catch (err) {
+        res.status(500).json({ err: err.message })
+    }
+});
 
+router.get('/:trackId', async (req, res) => { //single track view
+
+})
 
 
 //=========================UPDATE=========================
