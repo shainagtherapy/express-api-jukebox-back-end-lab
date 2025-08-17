@@ -1,4 +1,4 @@
-const Track = require('./tracks.js')
+const Track = require('../models/tracks.js')
 const express = require('express')
 const router = express.Router();
 
@@ -48,7 +48,7 @@ router.get('/:trackId', async (req, res) => { //single track view
 
 router.put('/:trackId', async (req, res) => {
     try {
-        const updatedTrack = await Track.findByIdAndUpdate(req.params.trackId, req.body);
+        const updatedTrack = await Track.findByIdAndUpdate(req.params.trackId, req.body, {new: true});
 
         if (!updatedTrack) {
             res.status(404)
