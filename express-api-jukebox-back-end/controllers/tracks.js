@@ -28,7 +28,7 @@ router.get('/', async (req, res) => { //full index view
 
 router.get('/:trackId', async (req, res) => { //single track view
     try {
-        const singleTrack = await Track.findById(req.params.trackId)
+        const singleTrack = await Track.findById(req.params.trackId, req.body, {new:true})
         if(!singleTrack) {
             res.status(404);
             throw new Error('Track not found');
@@ -74,6 +74,7 @@ router.delete('/:trackId', async (req,res) => {
             res.status(404);
             throw new Error('Track not found!');
         }
+        res.status(200).json(deletedTrack);
     } catch (err) {
         if (res.statusCode === 404) {
             res.json({ err: err.message });
