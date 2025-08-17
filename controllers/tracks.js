@@ -1,4 +1,4 @@
-const Track = require('../models/tracks.js')
+const Track = require('./tracks.js')
 const express = require('express')
 const router = express.Router();
 
